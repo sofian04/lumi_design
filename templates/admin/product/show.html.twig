@@ -1,0 +1,71 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+	{{ parent() }}
+	Produits
+{% endblock %}
+
+{% block body %}
+	<main>
+		<p class="mb-3">
+			<a href="{{ path('admin_product_index') }}" class="btn btn-primary">Retour à la liste</a>
+		</p>
+
+		<section>
+			{% if product is not null %}
+				<div class="container mt-5">
+					<div class="row">
+						<div class="col-md-6">
+							{% if product.image starts with 'http' %}
+								<img src={{ product.image }} alt="{{ product.name }}" class="img-fluid rounded shadow">
+							{% else %}
+								<img src={{ vich_uploader_asset(product, 'imageFile') }} alt="{{ product.name }}" class="img-fluid rounded shadow">
+							{% endif %}
+						</div>
+						<div class="col-md-6">
+							<h2 class="mb-4">{{ product.name }}</h2>
+							{% if product.category %}
+								<p class="badge bg-secondary mb-3">{{ product.category.name }}</p>
+							{% endif %}
+							<p class="lead mb-4">{{ product.description }}</p>
+							<h2 class="text-primary">{{ product.price }}€</h2>
+							<p>
+								Stock
+								{{ product.stock ?? 'Rupture de stock' }}
+							</p>
+						</div>
+					</div>
+					<div class="mt-5">
+						<div>
+							<table class="table table-striped">
+								<caption>Détails du produit</caption>
+								<tbody>
+									<tr>
+										<th>Référence</th>
+										<td>{{ product.id }}</td>
+									</tr>
+									<tr>
+										<th>Slug</th>
+										<td>{{ product.slug }}</td>
+									</tr>
+									<tr>
+										<th>Stock</th>
+										<td>{{ product.stock }}</td>
+									</tr>
+									<tr>
+										<th>Date de création</th>
+										<td>{{ product.createdAt|date('d/m/Y H:i') }}</td>
+									</tr>
+									<tr>
+										<th>Dernière mise à jour</th>
+										<td>{{ product.updatedAt ? product.updatedAt|date('d/m/Y H:i') : 'N/A' }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</section>
+	</main>
+{% endblock %}

@@ -1,0 +1,39 @@
+<header class="mb-5">
+	<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+		<div class="container ">
+			<a
+				class="navbar-brand d-flex align-items-center" href={{ path('front_home_index') }}>
+				{# <img src={{ asset('img/logo/lumi-design-logo.png') }} alt="lumi design logo" width="30" class="d-inline-block align-text-top me-1"> #}
+				LumiDesign
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav w-100">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href={{ path('admin_dashboard_index') }}>Dashboard</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href={{ path('admin_product_index') }}>Produits</a>
+					</li>
+					<li class="nav-item">
+						<a href={{ path('admin_category_index') }} class="nav-link">Categories</a>
+					</li>
+					<li class="nav-item">
+						<a href={{ path('admin_user_index') }} class="nav-link">Utilisateurs</a>
+					</li>
+					{% if is_granted('ROLE_SUPER_ADMIN') %}
+						<li>
+							<a href={{ path('admin_user_new')}} class="nav-link">
+								Créer un Administrateur</a>
+						</li>
+					{% endif %}
+					<li class="ms-auto">
+						<a class="nav-link" href={{ path('app_logout') }}>Deconnexion</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>

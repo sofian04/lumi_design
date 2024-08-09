@@ -1,0 +1,59 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+	{{ parent() }}
+	Produits
+{% endblock %}
+
+{% block body %}
+	<main>
+		<section>
+			<h1 class="mb-5">Liste des produits</h1>
+			<a href={{ path('admin_product_new')}} class="btn btn-warning mb-4">Ajouter un produit</a>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">{{ knp_pagination_sortable(products, '#', 'p.id') }}</th>
+						<th scope="col">{{ knp_pagination_sortable(products, 'Produits', 'p.name') }}</th>
+						<th scope="col">{{ knp_pagination_sortable(products, 'Date de mise à jour', 'p.updatedAt') }}</th>
+						<th scope="col">Modifier</th>
+						<th scope="col">Supprimer</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nom du produit</th>
+						<th scope="col">Date de mise à jour</th>
+						<th scope="col">Modifier</th>
+						<th scope="col">Supprimer</th>
+					</tr>
+				</tfoot>
+				<tbody class="table-group-divider">
+					{% for product in products %}
+						<tr>
+							<th scope="row">{{ product.id }}</th>
+							<td>
+								<a href={{ path('admin_product_show', { 'slug' : product.slug} ) }}>{{ product.name }}</a>
+							</td>
+							<td>{{ product.updatedAt|date('d/m/Y')}}</td>
+							<td>
+								<a href={{ path('admin_product_edit', { 'slug': product.slug} )}} class="btn btn-primary">Modifier</a>
+							</td>
+							<td>
+								<form action={{ path('admin_product_delete', { 'id': product.id} )}} method="POST">
+									<input type="hidden" name="_method" value="DELETE">
+									<input type="submit" value="Supprimer" class="btn btn-danger">
+								</form>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="navigation mt-3">
+				{{ knp_pagination_render(products) }}
+			</div>
+		</section>
+	</main>
+{% endblock %}

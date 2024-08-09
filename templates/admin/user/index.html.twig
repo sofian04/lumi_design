@@ -1,0 +1,33 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+	{{ parent()}}Liste des Utilisateurs
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des Utilisateurs</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{{ knp_pagination_sortable(users, '#', 'u.id') }}</th>
+				<th>{{ knp_pagination_sortable(users, 'Email', 'u.email') }}</th>
+				<th>Modifier</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>
+						<a href={{ path('admin_user_show', {'id': user.id} ) }}>{{ user.email }}</a>
+					</td>
+					<td>
+						<a href={{ path('admin_user_edit',{ 'id': user.id} )}} class="btn btn-primary">Modifier</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{ knp_pagination_render(users)}}
+{% endblock %}

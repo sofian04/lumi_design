@@ -1,0 +1,45 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}
+	{{ parent()}}Accueil!
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href={{ asset('css/style.css')}}>
+{% endblock %}
+
+{% block body %}
+	<main>
+		<section class="hero mb-5">
+			<h1 class="display-5 fw-bold mb-4">Nos Luminaires</h1>
+			<p class="fs-4">Découvrez notre collection exclusive de luminaires élégants et modernes.</p>
+		</section>
+
+		<section>
+			<div class="container">
+				<h2 class="mb-5">Nos nouveautés</h2>
+				<div class="row g-5">
+					{% for product in products %}
+						<div class="col-md-4">
+							<div class="card mb-4">
+								{% if product.image starts with 'http' %}
+									<img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+								{% else %}
+									<img src={{ asset('img/products/' ~ product.image) }} class="card-img-top" alt="{{ product.name }}">
+								{% endif %}
+								<div class="card-body">
+									<h5 class="card-title">{{ product.name }}</h5>
+									<p class="card-text">{{ product.description|slice(0, 50) }}...</p>
+									<a href="{{ path('front_home_show', {'slug': product.slug} ) }}" class="btn btn-primary">En savoir plus</a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="navigation mt-3">
+				{{ knp_pagination_render(products) }}
+			</div>
+		</section>
+	</main>
+{% endblock %}
